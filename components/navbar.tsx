@@ -40,7 +40,7 @@ export default function Navbar() {
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-20">
+        <div className="flex justify-between items-center h-28">
           {/* Logo */}
           <motion.div
             initial={{ opacity: 0 }}
@@ -51,7 +51,7 @@ export default function Navbar() {
             <img
               src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/edlogo-removebg-preview-jZ3t1uSjiqVfRjRLISrhmiBKw7fgy6.png"
               alt="Eduardo Auto Detailing"
-              className="h-12 w-auto"
+              className="h-24 w-auto"
             />
           </motion.div>
 
@@ -73,7 +73,7 @@ export default function Navbar() {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => scrollToSection("#booking")}
-            className="hidden md:block px-6 py-2 bg-primary text-primary-foreground rounded-lg font-semibold hover:glow-red transition-all duration-300"
+            className="hidden md:block px-6 py-2 bg-primary text-primary-foreground rounded-lg font-semibold hover:glow-orange transition-all duration-300"
           >
             Book Now
           </motion.button>

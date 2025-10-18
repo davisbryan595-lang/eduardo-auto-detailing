@@ -82,6 +82,24 @@ export default function RootLayout({
             }),
           }}
         />
+
+        {/* Safe FullStory script loader: append a script tag with error handling (no global fetch wrapping). */}
+        <script dangerouslySetInnerHTML={{ __html: `(function(){
+          try {
+            if (typeof window === 'undefined') return;
+            var url = 'https://edge.fullstory.com/s/fs.js';
+            var s = document.createElement('script');
+            s.src = url;
+            s.async = true;
+            s.defer = true;
+            s.crossOrigin = 'anonymous';
+            s.onload = function(){ console.info('FullStory script loaded'); };
+            s.onerror = function(e){ console.warn('FullStory script failed to load or was blocked', e); };
+            (document.head || document.documentElement).appendChild(s);
+          } catch (e) {
+            console.warn('FullStory loader unexpected error:', e);
+          }
+        })();` }} />
       </head>
       <body className={`font-sans antialiased bg-background text-foreground`}>
         {children}
