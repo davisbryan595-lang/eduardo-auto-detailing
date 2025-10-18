@@ -3,12 +3,12 @@
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { useInView } from "react-intersection-observer"
-import { ChevronLeft, ChevronRight, X } from "lucide-react"
+import { ChevronRight, X } from "lucide-react"
+import { BeforeAfterSlider } from "./before-after-slider"
 
 export default function Gallery() {
   const { ref, inView } = useInView({ threshold: 0.2, triggerOnce: true })
   const [selectedImage, setSelectedImage] = useState<number | null>(null)
-  const [sliderPosition, setSliderPosition] = useState(50)
 
   const beforeAfterPairs = [
     {
@@ -86,57 +86,9 @@ export default function Gallery() {
               key={index}
               variants={itemVariants}
               whileHover={{ scale: 1.02 }}
-              className="relative group cursor-pointer"
+              className="relative group"
             >
-              <div className="relative overflow-hidden rounded-lg h-64 bg-card border border-border">
-                {/* After Image */}
-                <img
-                  src={pair.after || "/placeholder.svg"}
-                  alt={`${pair.title} after`}
-                  className="w-full h-full object-cover"
-                />
-
-                {/* Before Image with Slider */}
-                <div
-                  className="absolute inset-0 overflow-hidden"
-                  style={{ width: `${sliderPosition}%` }}
-                  onMouseMove={(e) => {
-                    const rect = e.currentTarget.parentElement?.getBoundingClientRect()
-                    if (rect) {
-                      const newPosition = ((e.clientX - rect.left) / rect.width) * 100
-                      setSliderPosition(Math.max(0, Math.min(100, newPosition)))
-                    }
-                  }}
-                >
-                  <img
-                    src={pair.before || "/placeholder.svg"}
-                    alt={`${pair.title} before`}
-                    className="w-full h-full object-cover"
-                    style={{ width: `${(100 / sliderPosition) * 100}%` }}
-                  />
-                </div>
-
-                {/* Slider Handle */}
-                <div
-                  className="absolute top-0 bottom-0 w-1 bg-accent cursor-col-resize"
-                  style={{ left: `${sliderPosition}%` }}
-                >
-                  <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-accent rounded-full p-2">
-                    <ChevronLeft className="w-4 h-4 text-background" />
-                    <ChevronRight className="w-4 h-4 text-background" />
-                  </div>
-                </div>
-
-                {/* Labels */}
-                <div className="absolute top-4 left-4 px-3 py-1 bg-background/80 rounded text-sm font-semibold text-foreground">
-                  Before
-                </div>
-                <div className="absolute top-4 right-4 px-3 py-1 bg-background/80 rounded text-sm font-semibold text-foreground">
-                  After
-                </div>
-              </div>
-
-              <h3 className="mt-4 text-lg font-bold text-foreground text-center">{pair.title}</h3>
+              <BeforeAfterSlider before={pair.before} after={pair.after} title={pair.title} />
             </motion.div>
           ))}
         </motion.div>
