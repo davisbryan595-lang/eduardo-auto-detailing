@@ -83,85 +83,21 @@ export default function RootLayout({
           }}
         />
 
-        {/* Guarded FullStory loader: attempts to fetch and evaluate the script safely and temporarily wraps window.fetch to suppress thrown rejections during initialization. */}
+        {/* Safe FullStory script loader: append a script tag with error handling (no global fetch wrapping). */}
         <script dangerouslySetInnerHTML={{ __html: `(function(){
           try {
             if (typeof window === 'undefined') return;
-            const url = 'https://edge.fullstory.com/s/fs.js';
-
-            var origFetch = window.fetch;
-            var __fs_fetch_wrapped = false;
-            function wrapFetch(){
-              if (!origFetch || __fs_fetch_wrapped) return;
-              __fs_fetch_wrapped = true;
-              try {
-                window.fetch = function(){
-                  try {
-                    return origFetch.apply(this, arguments).catch(function(err){
-                      console.warn('FullStory suppressed fetch rejection:', err);
-                      try { return Promise.resolve(new Response(null,{status:0})); } catch(e){ return Promise.resolve(null); }
-                    });
-                  } catch(e){
-                    console.warn('FullStory fetch wrapper sync error:', e);
-                    try { return Promise.resolve(new Response(null,{status:0})); } catch(er){ return Promise.resolve(null); }
-                  }
-                };
-              } catch(e){ console.warn('Unable to wrap fetch:', e); }
-            }
-
-            function restoreFetch(){
-              try {
-                if (origFetch) window.fetch = origFetch;
-                __fs_fetch_wrapped = false;
-                console.info('Restored original fetch');
-              } catch(e){ console.warn('Failed to restore fetch:', e); }
-            }
-
-            wrapFetch();
-
-            fetch(url, { cache: 'no-store' })
-              .then(function(res){
-                if (!res || !res.ok) { console.warn('FullStory fetch failed or blocked:', res); restoreFetch(); return null; }
-                return res.text();
-              })
-              .then(function(text){
-                if (!text) { return; }
-                try {
-                  (0,eval)(text);
-                  console.info('FullStory loaded via guarded loader');
-                } catch (e) {
-                  console.warn('FullStory eval error:', e);
-                }
-
-                // Attempt to detect FS initialization and restore fetch afterwards
-                var checks = 0;
-                var poll = setInterval(function(){
-                  checks++;
-                  try {
-                    if (window.FS || window._fs || window._fs_initialized || window.FS && window.FS.getCurrentSession){
-                      clearInterval(poll);
-                      restoreFetch();
-                    } else if (checks > 20){ // ~10s timeout
-                      clearInterval(poll);
-                      restoreFetch();
-                    }
-                  } catch(e){
-                    clearInterval(poll);
-                    restoreFetch();
-                  }
-                }, 500);
-              })
-              .catch(function(err){
-                console.warn('FullStory fetch error:', err);
-                restoreFetch();
-              });
-
-            // Safety fallback: restore after 12s just in case
-            setTimeout(function(){ try{ restoreFetch(); } catch(e){} }, 12000);
-
+            var url = 'https://edge.fullstory.com/s/fs.js';
+            var s = document.createElement('script');
+            s.src = url;
+            s.async = true;
+            s.defer = true;
+            s.crossOrigin = 'anonymous';
+            s.onload = function(){ console.info('FullStory script loaded'); };
+            s.onerror = function(e){ console.warn('FullStory script failed to load or was blocked', e); };
+            (document.head || document.documentElement).appendChild(s);
           } catch (e) {
             console.warn('FullStory loader unexpected error:', e);
-            try{ if(window && window.fetch) {} } catch(err){}
           }
         })();` }} />
       </head>
