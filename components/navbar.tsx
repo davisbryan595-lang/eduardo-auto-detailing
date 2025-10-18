@@ -51,7 +51,7 @@ export default function Navbar() {
             <img
               src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/edlogo-removebg-preview-jZ3t1uSjiqVfRjRLISrhmiBKw7fgy6.png"
               alt="Eduardo Auto Detailing"
-              className="h-24 w-auto"
+              className="h-36 w-auto"
             />
           </motion.div>
 
