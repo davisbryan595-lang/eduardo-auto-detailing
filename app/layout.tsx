@@ -82,6 +82,36 @@ export default function RootLayout({
             }),
           }}
         />
+
+        {/* Guarded FullStory loader: attempts to fetch and evaluate the script safely. */}
+        <script dangerouslySetInnerHTML={{ __html: `(function(){
+          try {
+            if (typeof window === 'undefined') return;
+            const url = 'https://edge.fullstory.com/s/fs.js';
+
+            // Try to fetch the script first to avoid unhandled network errors in third-party code
+            fetch(url, { cache: 'no-store' })
+              .then(function(res){
+                if (!res || !res.ok) { console.warn('FullStory fetch failed or blocked:', res); return null; }
+                return res.text();
+              })
+              .then(function(text){
+                if (!text) return;
+                try {
+                  // Evaluate in isolated context
+                  (0,eval)(text);
+                  console.info('FullStory loaded via guarded loader');
+                } catch (e) {
+                  console.warn('FullStory eval error:', e);
+                }
+              })
+              .catch(function(err){
+                console.warn('FullStory fetch error:', err);
+              });
+          } catch (e) {
+            console.warn('FullStory loader unexpected error:', e);
+          }
+        })();` }} />
       </head>
       <body className={`font-sans antialiased bg-background text-foreground`}>
         {children}
