@@ -142,10 +142,10 @@
   @keyframes glow-pulse {
     0%,
     100% {
-      box-shadow: 0 0 20px rgba(230, 100, 50, 0.6), 0 0 40px rgba(230, 100, 50, 0.3);
+      box-shadow: 0 0 20px rgba(255, 140, 0, 0.6), 0 0 40px rgba(255, 140, 0, 0.3);
     }
     50% {
-      box-shadow: 0 0 30px rgba(230, 100, 50, 0.8), 0 0 60px rgba(230, 100, 50, 0.5);
+      box-shadow: 0 0 30px rgba(255, 140, 0, 0.8), 0 0 60px rgba(255, 140, 0, 0.5);
     }
   }
 
@@ -172,5 +172,12 @@
     100% {
       left: 100%;
     }
+  }
+
+  .hero-background {
+    background-image: url('https://images.pexels.com/photos/17377920/pexels-photo-17377920.jpeg');
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
   }
 }

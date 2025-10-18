@@ -218,7 +218,7 @@ export default function BookingForm() {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 type="submit"
-                className="w-full py-4 bg-primary text-primary-foreground rounded-lg font-bold text-lg hover:glow-red transition-all duration-300"
+                className="w-full py-4 bg-primary text-primary-foreground rounded-lg font-bold text-lg hover:glow-orange transition-all duration-300"
               >
                 Book Appointment
               </motion.button>

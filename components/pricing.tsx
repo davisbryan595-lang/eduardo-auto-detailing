@@ -127,7 +127,7 @@ export default function Pricing() {
                 whileTap={{ scale: 0.95 }}
                 className={`w-full py-3 rounded-lg font-bold mb-8 transition-all duration-300 ${
                   tier.highlighted
-                    ? "bg-primary text-primary-foreground hover:glow-red"
+                    ? "bg-primary text-primary-foreground hover:glow-orange"
                     : "bg-primary/20 text-accent hover:bg-primary/30"
                 }`}
               >

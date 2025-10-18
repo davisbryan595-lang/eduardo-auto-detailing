@@ -14,14 +14,7 @@ export default function Hero() {
   return (
     <section id="home" className="relative w-full h-screen flex items-center justify-center overflow-hidden">
       {/* Background Image with Overlay */}
-      <div
-        className="absolute inset-0 bg-cover bg-center"
-        style={{
-          backgroundImage:
-            "url(/placeholder.svg?height=1080&width=1920&query=luxury%20car%20detailing%20orange%20sports%20car)",
-          backgroundAttachment: "fixed",
-        }}
-      >
+      <div className="hero-background absolute inset-0 bg-cover bg-center">
         <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/60 to-background/80" />
         <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent/20" />
       </div>
@@ -55,7 +48,7 @@ export default function Hero() {
         >
           <button
             onClick={() => scrollToSection("#booking")}
-            className="px-8 py-4 bg-primary text-primary-foreground rounded-lg font-bold text-lg hover:glow-red transition-all duration-300 transform hover:scale-105"
+            className="px-8 py-4 bg-primary text-primary-foreground rounded-lg font-bold text-lg hover:glow-orange transition-all duration-300 transform hover:scale-105"
           >
             Book Now
           </button>
