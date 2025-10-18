@@ -127,11 +127,11 @@
 
 /* Added custom animations for glow effects and liquid fills */
 @layer utilities {
-  .glow-red {
-    box-shadow: 0 0 20px rgba(230, 100, 50, 0.6), 0 0 40px rgba(230, 100, 50, 0.3);
+  .glow-orange {
+    box-shadow: 0 0 20px rgba(255, 140, 0, 0.6), 0 0 40px rgba(255, 140, 0, 0.3);
   }
 
-  .glow-orange {
+  .animate-glow {
     box-shadow: 0 0 20px rgba(255, 140, 0, 0.6), 0 0 40px rgba(255, 140, 0, 0.3);
   }
 
