@@ -3,12 +3,12 @@
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { useInView } from "react-intersection-observer"
-import { ChevronLeft, ChevronRight, X } from "lucide-react"
+import { ChevronRight, X } from "lucide-react"
+import { BeforeAfterSlider } from "./before-after-slider"
 
 export default function Gallery() {
   const { ref, inView } = useInView({ threshold: 0.2, triggerOnce: true })
   const [selectedImage, setSelectedImage] = useState<number | null>(null)
-  const [sliderPosition, setSliderPosition] = useState(50)
 
   const beforeAfterPairs = [
     {
